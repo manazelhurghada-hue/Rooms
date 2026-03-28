@@ -144,3 +144,52 @@ footer {
 
 </body>
 </html>
+<section id="interactive-map">
+    <h2>Find a Place</h2>
+    <p>Select a budget and explore host options:</p>
+
+    <label for="budget">Your Budget ($): </label>
+    <input type="number" id="budget" placeholder="Enter your budget" />
+    <button onclick="filterResults()">Search</button>
+
+    <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
+</section>
+
+<script>
+  // Initialize Map
+  function initMap() {
+      const elGouna = { lat: 27.3984, lng: 33.6489 }; // Example coordinates for El Gouna
+      const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 12,
+          center: elGouna,
+      });
+
+      // Example properties (replace with real data)
+      const properties = [
+          { position: { lat: 27.4004, lng: 33.6490 }, budget: 50 },
+          { position: { lat: 27.4014, lng: 33.6500 }, budget: 100 },
+      ];
+
+      // Add markers
+      properties.forEach((property) => {
+          new google.maps.Marker({
+              position: property.position,
+              map: map,
+              title: `Budget: $${property.budget}`,
+          });
+      });
+  }
+
+  // Filter results based on budget
+  function filterResults() {
+      const budget = document.getElementById('budget').value;
+      alert(`Filtering properties for budget <= $${budget}`);
+      // Logic for filtering properties based on budget
+  }
+</script>
+
+<!-- Google Maps JS API (replace YOUR_API_KEY with real key) -->
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+    async defer
+></script>
